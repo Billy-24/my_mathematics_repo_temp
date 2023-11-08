@@ -1,0 +1,494 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "private_outputs": true,
+      "provenance": [],
+      "authorship_tag": "ABX9TyOq0b9WTqhnEToRvN/59Gp/",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Billy-24/my_mathematics_repo_temp/blob/main/PROJET_FINAL_Speed%2BDating%2BData.ipynb%20suite%201\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "8j8WFnXB7i-N"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "from google.colab import files\n",
+        "import io\n",
+        "uploaded = files.upload()\n",
+        "import matplotlib.pyplot as plt\n",
+        "import numpy as np\n",
+        "import datetime\n",
+        "import seaborn as sns\n",
+        "import sklearn\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.impute import SimpleImputer\n",
+        "from sklearn.preprocessing import LabelEncoder\n",
+        "\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data = pd.read_csv(io.BytesIO(uploaded[\n",
+        "'Speed+Dating+Data.csv']), encoding='ISO-8859-1')\n",
+        "data.head()"
+      ],
+      "metadata": {
+        "id": "CeXXXhs97xFm"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "lkUPHCP_uWC9"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data['income'].head()"
+      ],
+      "metadata": {
+        "id": "8wBrkbQeuQ7K"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data['income'].head()"
+      ],
+      "metadata": {
+        "id": "kca7_7hwuyVw"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data.info()"
+      ],
+      "metadata": {
+        "id": "T0KDxz8YtYvV"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "shape = data.shape"
+      ],
+      "metadata": {
+        "id": "I4bY2xiMx6FI"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Affichez le nombre de lignes et de colonnes\n",
+        "print(\"Nombre de lignes :\", shape[0])\n",
+        "print(\"Nombre de colonnes :\", shape[1])"
+      ],
+      "metadata": {
+        "id": "NK57xKz5ymIE"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Affichez toutes les colonnes en utilisant l'attribut columns\n",
+        "print(data.columns)"
+      ],
+      "metadata": {
+        "id": "ES5lFPOny1EM"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data.isnull().sum()"
+      ],
+      "metadata": {
+        "id": "sCIjlz7TUTxp"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data.info()"
+      ],
+      "metadata": {
+        "id": "wsm2ftlYZljv"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data.describe(include=\"all\")"
+      ],
+      "metadata": {
+        "id": "Bzc_-sI_YniG"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data['income'] = data['income'].str.replace(',', '', regex=True)  # Supprimer les virgules dans les nombres\n",
+        "data['income'] = data['income'].str.extract('(\\d+\\.\\d+|\\d+)').astype(float)  # Extraire les nombres et convertir en float\n"
+      ],
+      "metadata": {
+        "id": "9o6qOq3HHmWN"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data['income'].head()"
+      ],
+      "metadata": {
+        "id": "aDc3pON0ri_H"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "## vérification des valeurs manquantes dans le dataset\n",
+        "plt.figure(figsize=(20,10))\n",
+        "sns.heatmap(data.isna(), cbar=False)"
+      ],
+      "metadata": {
+        "id": "xwA7OsuQaZea"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "cat_data=[]\n",
+        "num_data=[]\n",
+        "for i,c in enumerate(data.dtypes):\n",
+        "  if c==object:\n",
+        "    cat_data.append(data.iloc[:,i])\n",
+        "  else:\n",
+        "    num_data.append(data.iloc[:,i])\n",
+        "cat_data=pd.DataFrame(cat_data)\n",
+        "cat_data\n"
+      ],
+      "metadata": {
+        "id": "HFliTs17cgcW"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "#Renseigner les valeurs manquantes\n",
+        "cat_data=[]\n",
+        "num_data=[]\n",
+        "for i,c in enumerate(data.dtypes):\n",
+        "  if c==object:\n",
+        "    cat_data.append(data.iloc[:,i])\n",
+        "  else:\n",
+        "    num_data.append(data.iloc[:,i])\n",
+        "cat_data=pd.DataFrame(cat_data).transpose()\n",
+        "num_data=pd.DataFrame(num_data).transpose()"
+      ],
+      "metadata": {
+        "id": "GECeESYoGscP"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# pour les valeurs manquantes dans les variables cathégoriques, on doit les remplacer par le Mode\n",
+        "cat_data=cat_data.apply(lambda x:x.fillna(x.value_counts().index[0]))\n",
+        "cat_data.isnull().sum().any()"
+      ],
+      "metadata": {
+        "id": "31_8Z0eOJDYy"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Un test pour voir si on retrouve encore des NAN dans le dataset\n",
+        "plt.figure(figsize=(20,10))\n",
+        "sns.heatmap(cat_data.isna(), cbar=False)"
+      ],
+      "metadata": {
+        "id": "nu6p_4EPf0sp"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "data['income'].head()"
+      ],
+      "metadata": {
+        "id": "OfO3mNqAupDs"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        " ##Créez un box plot en spécifiant showfliers=True\n",
+        "sns.boxplot(x=data['income'], showfliers=True)\n",
+        "plt.show()"
+      ],
+      "metadata": {
+        "id": "d2VXZV1zJz-t"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Créez un nuage de points avec 'ApplicantIncome' sur l'axe des x\n",
+        "plt.scatter(range(len(data['income'])), data['income'])\n",
+        "plt.show()"
+      ],
+      "metadata": {
+        "id": "Io_YQ4U9KD7T"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "MnZSDhSxKD1A"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "num_data = num_data.fillna(num_data.mean())\n",
+        "num_data"
+      ],
+      "metadata": {
+        "id": "q2ZHxK2rMSQM"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Un test pour voir si on retrouve encore des NAN dans le dataset\n",
+        "plt.figure(figsize=(20,10))\n",
+        "sns.heatmap(num_data.isna(), cbar=False)"
+      ],
+      "metadata": {
+        "id": "b-Sl4BPBMedp"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#fusionner dataset à cette étape (combined_data)\n",
+        "combined_data = pd.concat([cat_data, num_data], axis=1)\n",
+        "\n",
+        "combined_data"
+      ],
+      "metadata": {
+        "id": "rfVvfNwPM3Z2"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Un test pour voir si on retrouve encore des NAN dans le dataset global\n",
+        "plt.figure(figsize=(20,10))\n",
+        "sns.heatmap(combined_data.isna(), cbar=False)"
+      ],
+      "metadata": {
+        "id": "hXPP2vdbNgCG"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# ANALYSE DESCRIPTIF DES ATTRIBUTS\n",
+        "## EN FONCTION DU GENRE\n",
+        "data_males = combined_data[combined_data['gender'] == 1]  # 0 pour les partenaires Masculins\n",
+        "data_females = combined_data[combined_data['gender'] == 0]  # 0 pour les partenaires féminins"
+      ],
+      "metadata": {
+        "id": "9Xs1lp3eQ9n0"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        " # Calcul des statistiques récapitulatives pour l'âge chez les partenaires masculins\n",
+        "mean_age_males = data_males['age'].mean()\n",
+        "median_age_males = data_males['age'].median()\n",
+        "std_dev_age_males = data_males['age'].std()"
+      ],
+      "metadata": {
+        "id": "PHiea6dKRczY"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "mean_age_females = data_females['age'].mean()\n",
+        "median_age_females = data_females['age'].median()\n",
+        "std_dev_age_females = data_females['age'].std()"
+      ],
+      "metadata": {
+        "id": "OOPc-KfYSbRd"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Comparaison des distributions\n",
+        "print(\"Statistiques récapitulatives pour l'âge chez les partenaires masculins:\")\n",
+        "print(f\"Moyenne : {mean_age_males}\")\n",
+        "print(f\"Médiane : {median_age_males}\")\n",
+        "print(f'Écart-type : {std_dev_age_males}')\n",
+        "print(\"\\nStatistiques récapitulatives pour l'âge chez les partenaires féminins:\")\n",
+        "print(f\"Moyenne : {mean_age_females}\")\n",
+        "print(f\"Médiane : {median_age_females}\")\n",
+        "print(f'Écart-type : {std_dev_age_females}')"
+      ],
+      "metadata": {
+        "id": "NJ-_Wh-eSjVw"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Exemple : Création d'un diagramme en violon pour l'âge chez les partenaires masculins et féminins\n",
+        "sns.violinplot(x='gender', y='age', data=data)\n",
+        "\n",
+        "plt.xlabel('Genre')\n",
+        "plt.ylabel('Age')\n",
+        "plt.xticks([0, 1], ['Males', 'Females'])\n",
+        "plt.show()"
+      ],
+      "metadata": {
+        "id": "WDNBwR3RTuRC"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "##'Interprétation :\n",
+        "\n",
+        "Âge :\n",
+        "\n",
+        "D'après l'histogramme, l'âge des partenaires masculins semble avoir une distribution légèrement plus élevée que celle des partenaires féminins.\n",
+        "Le box plot montre que la médiane de l'âge des partenaires masculins est légèrement supérieure à celle des partenaires féminins.\n",
+        "Cela suggère que, en moyenne, les partenaires masculins sont légèrement plus âgés que les partenaires féminins dans cet échantillon.\n",
+        "Éducation :\n",
+        "\n",
+        "L'histogramme et le box plot ne montrent pas de différences significatives dans la distribution de l'éducation entre les deux groupes.\n",
+        "Les médianes sont assez similaires, indiquant que les niveaux d'éducation sont comparables entre les partenaires masculins et féminins.\n",
+        "Centres d'intérêt :\n",
+        "\n",
+        "En examinant les histogrammes et les box plots des centres d'intérêt, on constate que certains intérêts semblent plus fréquents chez l'un des groupes.\n",
+        "Par exemple, les partenaires masculins semblent avoir une fréquence plus élevée d'intérêt pour le sport, tandis que les partenaires féminins montrent une fréquence plus élevée d'intérêt pour les arts.\n",
+        "Cela suggère des préférences différentes en termes de centres d'intérêt entre les deux groupes.\n",
+        "Il est important de noter que ces observations sont basées sur des analyses descriptives et des comparaisons visuelles. Pour des conclusions plus solides, des tests statistiques peuvent être nécessaires. De plus, les différences observées peuvent varier en fonction de la taille de l'échantillon et de la population étudiée. Il est donc important de rester prudent dans les interprétations et de tenir compte de l'ensemble du contexte de l'étude.\n",
+        "##"
+      ],
+      "metadata": {
+        "id": "c8UpXYNRV-Su"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "### EN FONCTION DE L'EDUCATION"
+      ],
+      "metadata": {
+        "id": "4PxgOllRWZFU"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
